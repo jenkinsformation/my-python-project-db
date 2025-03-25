@@ -19,14 +19,7 @@ pipeline {
                 sh 'python3 -m flake8 . --count --show-source --statistics || true'
             }
         }
-        stage('Publish result') {
-            steps {
-                sh 'docker build -t jenkinsformation/my-python-project-db:$BUILD_NUMBER .'
-				sh 'docker login -u $DOCKER_LOGIN -p $DOCKER_PASS'
-				sh 'docker push jenkinsformation/my-python-project-db:$BUILD_NUMBER'
-            }
-        }
-	stage('Login Docker') {
+	stage('Push Docker') {
             steps {
                 withCredentials([string(credentialsId: 'DOCKER_PASSWORD_DB', variable: 'DOCKER_PASS')]) {
                     sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
