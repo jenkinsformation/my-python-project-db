@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+	DOCKER_USER='dockerdavetp3'
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -21,6 +24,16 @@ pipeline {
                 sh 'docker build -t jenkinsformation/my-python-project-db:$BUILD_NUMBER .'
 				sh 'docker login -u $DOCKER_LOGIN -p $DOCKER_PASS'
 				sh 'docker push jenkinsformation/my-python-project-db:$BUILD_NUMBER'
+            }
+        }
+	stage('Login Docker') {
+            steps {
+                withCredentials([string(credentialsId: 'DOCKER_PASSWORD_DB', variable: 'DOCKER_PASS')]) {
+                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+		    sh 'docker build -t dockerdavetp3/simple-java-maven-app:$BUILD_NUMBER .'
+                    sh 'docker login -u $DOCKER_LOGIN -p $DOCKER_PASS'
+                    sh 'docker push dockerdavetp3/simple-java-maven-app:$BUILD_NUMBER'
+                }
             }
         }
     }
