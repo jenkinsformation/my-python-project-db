@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    parameters { booleanParam(name: 'publishdocker', defaultValue: true, description: 'Select in order to publish to docker') }.
+    parameters { booleanParam(name: 'publishdocker', defaultValue: true, description: 'Select in order to publish to docker') }
     environment {
 	DOCKER_USER='dockerdavetp3'
     }
