@@ -1,0 +1,18 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                // Get the code from the version control system.
+                checkout scm
+            }
+        }
+
+        stage('Flake8 Lint') {
+            steps {
+                // Run flake8 against your codebase
+                sh 'flake8 .'
+            }
+        }
+    }
+}
