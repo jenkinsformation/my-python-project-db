@@ -17,9 +17,11 @@ booleanParam(name: 'publishdocker', defaultValue: true, description: 'Select in 
         stage('Flake8 Lint') {
             steps {
                 // Run flake8 against your codebase
-                sh 'python3 --version'
-                sh 'python3 -m flake8 --version'
-                sh 'python3 -m flake8 . --count --show-source --statistics || true'
+                sh '''
+		python3 --version'
+                python3 -m flake8 --version'
+                python3 -m flake8 . --count --show-source --statistics || true
+		'''
             }
         }
 	stage('Push Docker') {
