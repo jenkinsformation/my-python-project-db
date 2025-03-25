@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    parameters { booleanParam(name: 'publish docker', defaultValue: true, description: 'Select in order to publish to docker') }.
+    parameters { booleanParam(name: 'publishdocker', defaultValue: true, description: 'Select in order to publish to docker') }.
     environment {
 	DOCKER_USER='dockerdavetp3'
     }
@@ -23,7 +23,7 @@ pipeline {
 	stage('Push Docker') {
             steps {
 		when {
-			expression {return params.publish docker}
+			expression {return params.publishdocker}
 		}
                 withCredentials([string(credentialsId: 'DOCKER_PASSWORD_DB', variable: 'DOCKER_PASS')]) {
                     sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
