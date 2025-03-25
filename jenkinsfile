@@ -16,9 +16,11 @@ pipeline {
                 sh 'python3 -m flake8 . --count --show-source --statistics || true'
             }
         }
-        stage('Unit tests') {
+        stage('Publish result') {
             steps {
-                sh 'pytest | tee report.txt'
+                sh 'docker build -t jenkinsformation/my-python-project-db:$BUILD_NUMBER .'
+				sh 'docker login -u $DOCKER_LOGIN -p $DOCKER_PASS'
+				sh 'docker push jenkinsformation/my-python-project-db:$BUILD_NUMBER'
             }
         }
     }
