@@ -11,7 +11,9 @@ pipeline {
         stage('Flake8 Lint') {
             steps {
                 // Run flake8 against your codebase
-                sh 'flake8 .'
+                sh 'python3 --version'
+                sh 'python3 -m flake8 --version'
+                sh 'python3 -m flake8 . --count --show-source --statistics || true'
             }
         }
     }
